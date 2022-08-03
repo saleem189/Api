@@ -26,6 +26,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**
+ * Aranging routes into group so that all routes bust be authenticates before validation
+ */
+Route::middleware('auth:sanctum')->group( function () {
+    Route::get('/logout', [AuthController::class, 'logout']);
+
+});
 
 /**
  * Buyer Model Resource Controller

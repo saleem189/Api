@@ -44,7 +44,8 @@ return [
     |
     */
 
-    'expiration' => null,
+    // 'expiration' => null,
+    'expiration' => 525600,  //here i define some time that it should expires after some specific time
 
     /*
     |--------------------------------------------------------------------------

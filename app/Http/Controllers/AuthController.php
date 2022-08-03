@@ -27,7 +27,7 @@ public function register(Request $request){
 
     return response()->json([
                 'access_token' => $token,
-                    'token_type' => 'Bearer',
+                'token_type' => 'Bearer',
     ]);
 }
 
@@ -57,4 +57,30 @@ public function me(Request $request)
 }
 
 
+public function logout()
+    {
+        auth()->user()->tokens()->delete();
+        return [
+            'message' => 'Tokens Revoked'
+        ];
+    }
+
+    // Revoke all tokens...
+    // $user->tokens()->delete();
+    
+    // Revoke the token that was used to authenticate the current request...
+    // $request->user()->currentAccessToken()->delete();
+    
+    // Revoke a specific token...
+    // $user->tokens()->where('id', $tokenId)->delete();
+
+
 }
+
+
+
+
+/**
+ * you may configure a scheduled tasks to delete all expired token database records that have been expired for at least 24 hours
+ * $schedule->command('sanctum:prune-expired --hours=24')->daily();
+ */

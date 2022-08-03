@@ -13,7 +13,10 @@ class BuyerController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            'status' => 200,
+            'message' => 'you are aunthicated' 
+        ],200);
     }
 
     /**
