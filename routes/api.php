@@ -6,6 +6,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\TransactionController;
+use App\Models\Seller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +63,9 @@ Route::resource('category',CategoryController::class);
  */
 Route::resource('transaction',TransactionController::class);
 
+Route::get('/test', function(){
+    return response()->json([Seller::first()]);
+});
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum'); //this line is for only loged in users or who has login Barer code

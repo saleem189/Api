@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -58,8 +59,8 @@ class User extends Authenticatable
         return $this->admin == User::ADMIN_USER;
     }
 
-    public function generateVerificationCode(){
+    public static function generateVerificationCode(){
         return Str::random(40);
-        // return $this->createToken('token');
+        // return $this->createToken('token')->plainTextToken;
     }
 }
