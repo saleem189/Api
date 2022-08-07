@@ -17,11 +17,6 @@ class BuyerController extends Controller
     public function index()
     {
         $buyers = Buyer::has('transactions')->get();
-        // return response()->json([
-        //     'status' => 200,
-        //     'data' => $buyers 
-        // ],200);
-
         //using trait api responser which we make for only responses
         return $this->showAll($buyers);
     }
@@ -53,13 +48,9 @@ class BuyerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Buyer $buyer)
     {
-        $buyer = Buyer::has('transactions')->findOrFail($id);
-        // return response()->json([
-        //     'status' => 200,
-        //     'data' => $buyer 
-        // ],200);
+        // $buyer = Buyer::has('transactions')->findOrFail($bu);
         return $this->showOne($buyer);
     }
 
