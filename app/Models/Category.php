@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes ;
+
 
      /**
      * The attributes that are mass assignable.
@@ -37,6 +39,8 @@ class Category extends Model
     protected $casts = [
         // 'email_verified_at' => 'datetime',
     ];
+
+    protected $dates=['deleted_at'];
 
     public function products(){
         return $this->belongsToMany(Product::class);

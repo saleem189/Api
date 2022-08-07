@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buyer extends User
 {
-    use HasFactory;
+    use HasFactory ;
 
     /**
      * The table associated with the model.

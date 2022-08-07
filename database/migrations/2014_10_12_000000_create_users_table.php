@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('admin')->nullable()->default(User::REGULAR_USER);
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes(); //add deleted at column in table
         });
     }
 
