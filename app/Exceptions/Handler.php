@@ -66,18 +66,14 @@ class Handler extends ExceptionHandler
                 if ($errorCode == 1451) {
                     return $this->errorResponse('Cannot remove this resource permanently. It is related with any other resource',409); //409  is conflict error
                 }
-                
-            }
-            else{
-
-                return $this->errorResponse('Unexpected Exception',500);  //generic Unexpected exception response
             }
         }
         if (config('app.debug')) {
             return parent::render($request, $exception);
-
         }
-            // return parent::render($request, $exception);
+        else{
+            return $this->errorResponse('Unexpected Exception',500);  //generic Unexpected exception response
+        }
     }
 
     /**
