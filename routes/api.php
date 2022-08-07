@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
 use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,9 +25,9 @@ use Illuminate\Support\Facades\Route;
 /**
  * commeting these default lines
  */
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 /**
  * Aranging routes into group so that all routes bust be authenticates before validation
@@ -39,13 +40,13 @@ Route::middleware('auth:sanctum')->group( function () {
 /**
  * Buyer Model Resource Controller
  */
-Route::resource('buyer',BuyerController::class);
+Route::resource('buyer',BuyerController::class)->only(['index', 'show']);
 
 
 /**
  * Seller Model Resource Controller
  */
-Route::resource('seller',SellerController::class);
+Route::resource('seller',SellerController::class)->only(['index', 'show']);
 
 
 /**
@@ -59,13 +60,15 @@ Route::resource('product',ProductController::class);
 Route::resource('category',CategoryController::class);
 
 /**
+ * User Model Resource Controller 
+ */
+Route::resource('user',UserController::class);
+/**
  * Transaction Model Resource Controller
  */
 Route::resource('transaction',TransactionController::class);
 
-Route::get('/test', function(){
-    return response()->json([Seller::first()]);
-});
+
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum'); //this line is for only loged in users or who has login Barer code

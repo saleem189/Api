@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Buyer;
 use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -16,14 +15,12 @@ class TransactionFactory extends Factory
      */
     public function definition()
     {
-        // $seller  = Seller::has('products')->get()->random();
-        // $buyer = User::all()->except($seller->id)->random();
+        $seller  = Seller::has('products')->get()->random();
+        $buyer = User::all()->except($seller->id)->random();
         return [
             'quantity' =>$this->faker->numberBetween(1,3),
-            'buyer_id' => $this->faker->numberBetween(1,40),
-            'product_id'=> $this->faker->numberBetween(1,40),
-            // 'buyer_id' => $buyer->id,
-            // 'product_id'=> $seller->products->random()->id,
+            'buyer_id' => $buyer->id,
+            'product_id'=> $seller->products->random()->id,
         ];
     }
 }
