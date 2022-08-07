@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Seller;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class SellerController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -15,10 +17,11 @@ class SellerController extends Controller
     public function index()
     {
         $sellers = Seller::has('products')->get();
-        return response()->json([
-            'status' => 200,
-            'data' => $sellers 
-        ],200);
+        // return response()->json([
+        //     'status' => 200,
+        //     'data' => $sellers 
+        // ],200);
+        return $this->showAll($sellers);
     }
 
     /**
@@ -50,11 +53,12 @@ class SellerController extends Controller
      */
     public function show($id)
     {
-        $buyer = Seller::has('products')->findOrFail($id);
-        return response()->json([
-            'status' => 200,
-            'data' => $buyer 
-        ],200);
+        $seller = Seller::has('products')->findOrFail($id);
+        // return response()->json([
+        //     'status' => 200,
+        //     'data' => $seller 
+        // ],200);
+        return $this->showOne($seller);
     }
 
     /**

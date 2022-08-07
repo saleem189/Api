@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Traits\ApiResponser;
 use Cloudinary\Api\Provisioning\UserRole;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +19,8 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return response()->json(['data'=>$users],200);
+        // return response()->json(['data'=>$users],200);
+        return $this->showAll($users);
     }
 
     /**
@@ -51,7 +54,8 @@ class UserController extends Controller
         $data['verification_token'] = User::generateVerificationCode();
 
         $user = User::create($data);
-        return response()->json(['code'=>201,'data'=>$user],201); //201 response code means record created
+        // return response()->json(['code'=>201,'data'=>$user],201); //201 response code means record created
+        return $this->showOne($user,201);
     }
 
     /**
@@ -63,7 +67,8 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return response()->json(['code'=>200,'data' => $user],200);
+        // return response()->json(['code'=>200,'data' => $user],200);
+        return $this->showOne($user);
     }
 
     /**
@@ -108,16 +113,17 @@ class UserController extends Controller
 
         if ($request->has('admin')) {
             if (!$user->isVerified()) {
-                return response()->json(['code'=>409,'error'=>'only verified users can modify the admin field'],409);
+                return $this->errorResponse('only verified users can modify the admin field',409);
             }
             $user->admin = $request->admin; 
         }
         if (!$user->isDirty()) {
-            return response()->json(['code'=>422,'error'=>'You need to specify a  different value to update'],422);
+            return $this->errorResponse('You need to specify a  different value to update',422);
         }
         
         $user->save();
-        return response()->json(['code'=>200,'data'=>$user],200);
+        // return response()->json(['code'=>200,'data'=>$user],200);
+        return $this->showOne($user);
 
     }
 

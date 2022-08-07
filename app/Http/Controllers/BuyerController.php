@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buyer;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class BuyerController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -15,10 +17,13 @@ class BuyerController extends Controller
     public function index()
     {
         $buyers = Buyer::has('transactions')->get();
-        return response()->json([
-            'status' => 200,
-            'data' => $buyers 
-        ],200);
+        // return response()->json([
+        //     'status' => 200,
+        //     'data' => $buyers 
+        // ],200);
+
+        //using trait api responser which we make for only responses
+        return $this->showAll($buyers);
     }
 
     /**
@@ -51,10 +56,11 @@ class BuyerController extends Controller
     public function show($id)
     {
         $buyer = Buyer::has('transactions')->findOrFail($id);
-        return response()->json([
-            'status' => 200,
-            'data' => $buyer 
-        ],200);
+        // return response()->json([
+        //     'status' => 200,
+        //     'data' => $buyer 
+        // ],200);
+        return $this->showOne($buyer);
     }
 
     /**
