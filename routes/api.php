@@ -1,11 +1,21 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BuyerCategoryController;
 use App\Http\Controllers\BuyerController;
+use App\Http\Controllers\BuyerProductController;
+use App\Http\Controllers\BuyerSellerController;
+use App\Http\Controllers\BuyerTransactionController;
+use App\Http\Controllers\CategoryBuyerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CategoryProductController;
+use App\Http\Controllers\CategorySellerController;
+use App\Http\Controllers\CategoryTransactionController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\TransactionCategoryController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionSellerController;
 use App\Http\Controllers\UserController;
 use App\Models\Seller;
 use App\Models\User;
@@ -41,6 +51,10 @@ Route::middleware('auth:sanctum')->group( function () {
  * Buyer Model Resource Controller
  */
 Route::resource('buyer',BuyerController::class)->only(['index', 'show']);
+Route::resource('buyer.transactions',BuyerTransactionController::class)->only('index');
+Route::resource('buyer.products',BuyerProductController::class)->only('index');
+Route::resource('buyer.sellers',BuyerSellerController::class)->only('index');
+Route::resource('buyer.category',BuyerCategoryController::class)->only('index');
 
 
 /**
@@ -52,12 +66,17 @@ Route::resource('seller',SellerController::class)->only(['index', 'show']);
 /**
  * Product Model Resource Controller
  */
-Route::resource('product',ProductController::class);
+Route::resource('product',ProductController::class)->only('index','show');
 
 /**
  * Category Model Resource Controller
  */
-Route::resource('category',CategoryController::class);
+Route::resource('category',CategoryController::class)->except('create','edit');
+Route::resource('category.buyer',CategoryBuyerController::class)->only('index');
+Route::resource('category.sellers',CategorySellerController::class)->only('index');
+Route::resource('category.products',CategoryProductController::class)->only('index');
+Route::resource('category.transactions',CategoryTransactionController::class)->only('index');
+
 
 /**
  * User Model Resource Controller 
@@ -66,7 +85,9 @@ Route::resource('user',UserController::class);
 /**
  * Transaction Model Resource Controller
  */
-Route::resource('transaction',TransactionController::class);
+Route::resource('transaction',TransactionController::class)->only('index','show');
+Route::resource('transaction.categories',TransactionCategoryController::class)->only('index');
+Route::resource('transaction.seller',TransactionSellerController::class)->only('index');
 
 
 Route::post('/auth/register', [AuthController::class, 'register']);

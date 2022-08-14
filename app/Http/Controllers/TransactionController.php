@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +16,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = Transaction::all();
+        return $this->showAll($transactions);
     }
 
     /**
@@ -43,9 +47,9 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Transaction $transaction)
     {
-        //
+        return $this->showOne($transaction);
     }
 
     /**
