@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -59,6 +60,8 @@ class Handler extends ExceptionHandler
                 return $this->errorResponse('Unauthenticated please login',401);
             }elseif($exception instanceOf AuthorizationException){
                 return $this->errorResponse('Sorry you are Unauthorized to perfom this action',403);
+            }elseif($exception instanceOf HttpException){
+                return $this->errorResponse($exception->getMessage(),$exception->getStatusCode());
             }elseif($exception instanceOf MethodNotAllowedHttpException){
                 return $this->errorResponse($exception->getMessage(),405);
             }elseif($exception instanceOf QueryException){
@@ -67,6 +70,8 @@ class Handler extends ExceptionHandler
                     return $this->errorResponse('Cannot remove this resource permanently. It is related with any other resource',409); //409  is conflict error
                 }
             }
+            
+            
         }
         if (config('app.debug')) {
             return parent::render($request, $exception);
