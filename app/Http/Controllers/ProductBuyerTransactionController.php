@@ -24,11 +24,13 @@ class ProductBuyerTransactionController extends Controller
         $request->validate([
             'quantity' => 'required|integer|min:1'
         ]);
+        // return response()->json(['buyer'=>$buyer->id,'buyer_status' => $buyer->verified,'product'=> $product->id, 'status'=> $buyer->isVerified()],200);
 
         if ($buyer->id == $product->seller_id) {
             return $this->errorResponse('The buyer must be different from the seller', 409);
         }
         if (!$buyer->isVerified()) {
+            // if($buyer->verified == 1){
             return $this->errorResponse('The buyer must be a verified user', 409);
         }
 
