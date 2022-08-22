@@ -60,7 +60,3 @@ class ProductBuyerTransactionController extends Controller
     }
 
 }
-
-// 47,273
-
-// 217
