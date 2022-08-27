@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
-
+    // 'default' => env('FILESYSTEM_DRIVER', 'local'),  //change this default configurstion to Disks Images
+    'default' => env('images'),
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -39,6 +39,15 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
+            'visibility' => 'public',
+        ],
+
+        /**
+         * adding custom disk to store images
+         */
+        'images' => [
+            'driver' => 'local',
+            'root' => public_path('img'),
             'visibility' => 'public',
         ],
 
