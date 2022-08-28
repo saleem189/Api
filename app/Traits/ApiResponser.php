@@ -40,4 +40,12 @@ trait ApiResponser
         return $this->successResponse(['data' => $model, 'code' => $code], $code);
     }
 
+       /**
+     * return single record of model in response
+     * @return singleRecord  example  User::find()->first()
+     */
+    private function showMessage($message, $code = 200){
+        return $this->successResponse(['data' => $message, 'code' => $code], $code);
+    }
+
 }

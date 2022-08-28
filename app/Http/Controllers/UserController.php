@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Traits\ApiResponser;
 use Cloudinary\Api\Provisioning\UserRole;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Null_;
 
 class UserController extends Controller
 {
@@ -135,5 +136,15 @@ class UserController extends Controller
     {
         $user->delete();
         return response()->json(['code'=>200,'data'=>$user],200);
+    }
+
+    public function verify($token)
+    {
+        $user = User::where('verification_token', $token)->firstOrFail();
+        $user->verified = User::VERIFIED_USER;
+        $user->verification_token = null;
+        $user->save();
+        return $this->showMessage('The account has been verified successfully');
+
     }
 }
