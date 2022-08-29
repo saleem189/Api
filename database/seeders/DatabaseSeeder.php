@@ -26,6 +26,14 @@ class DatabaseSeeder extends Seeder
         Transaction::truncate();
         DB::table('category_product')->truncate();
 
+
+// ---------------------------------------------------Disabling Built-in eleqount model events (Laravel Model Events)------------------
+        User::flushEventListeners();
+        Category::flushEventListeners();
+        Product::flushEventListeners();
+        Transaction::flushEventListeners();
+// ---------------------------------------------------------------------- End ------------------------------------
+
         //defining variables to how much records to be stored
         $usersQuantity =1000;
         $categorysQuantity =30;

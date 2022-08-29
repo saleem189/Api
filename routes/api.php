@@ -110,3 +110,4 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum'); //this line is for only loged in users or who has login Barer code
 Route::get('user/verify/{token}', [UserController::class, 'verify'])->name('verify');
+Route::get('user/{user}/resend', [UserController::class, 'resend'])->name('resend');

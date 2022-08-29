@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserMailChange;
 use App\Models\User;
 use App\Traits\ApiResponser;
 use Cloudinary\Api\Provisioning\UserRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use phpDocumentor\Reflection\Types\Null_;
 
 class UserController extends Controller
@@ -147,4 +149,23 @@ class UserController extends Controller
         return $this->showMessage('The account has been verified successfully');
 
     }
+
+    public function resend(User $user)
+    {
+        if ($user->isVerified()) {
+            return $this->errorResponse('This user is already verified',409);
+        }
+
+     
+        /**
+         * retry function (Laravel Builtin function)
+         * 
+         */
+        retry(5, function($user){
+            Mail::to($user->email)->send(new UserMailChange($user));
+        },100);
+
+        return $this->showMessage('The verification email has been resend');
+    }
+
 }

@@ -20,7 +20,7 @@ trait ApiResponser
      * defing Error response to return error message
      * @return errorMessage
      */
-    private function errorResponse($message, $code){
+    private function errorResponse($message, $code = 422){ //by default 422 response ( Unprocessable Entity )
         return response()->json(['error'=>$message, 'code' => $code], $code);
     }
 
