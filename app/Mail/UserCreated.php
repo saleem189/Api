@@ -30,6 +30,7 @@ class UserCreated extends Mailable
      */
     public function build()
     {
-        return $this->text('emails.welcome');
+        // return $this->text('emails.welcome')->subject('Please Confirm your account'); //this line was brfore markodown.. its simple formate of mail
+        return $this->markdown('emails.welcome')->subject('Please Confirm your account');
     }
 }
