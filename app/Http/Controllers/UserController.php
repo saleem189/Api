@@ -159,6 +159,9 @@ class UserController extends Controller
      
         /**
          * retry function (Laravel Builtin function)
+         * Essentially, retry is a general-purpose helper function that helps you attempt the given callback until the given maximum attempt threshold is met.
+         * Here’s the signature of this function.
+         * function retry($times, callable $callback, $sleep = 0, $when = null);
          * 
          */
         retry(5, function($user){
