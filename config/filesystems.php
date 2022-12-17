@@ -14,7 +14,7 @@ return [
     */
 
     // 'default' => env('FILESYSTEM_DRIVER', 'local'),  //change this default configurstion to Disks Images
-    'default' => env('images'),
+    'default' => 'images',
     /*
     |--------------------------------------------------------------------------
     | Filesystem Disks
@@ -47,7 +47,7 @@ return [
          */
         'images' => [
             'driver' => 'local',
-            'root' => public_path('img'),
+            'root' => public_path('images'),
             'visibility' => 'public',
         ],
 

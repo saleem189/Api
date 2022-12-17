@@ -135,13 +135,13 @@ class SellerProductController extends Controller
     {
         $this->checkSeller($seller, $product); 
         $product->delete();
-        Storage::delete($product->image);
+        Storage::delete($product->image); //deleting image of current product
         return $this->showOne($product);   
     }
 
     /**
      * function to check weather seller is the owner of product
-     * inorder ro upadte record  
+     * inorder to update record  
      */
     public function checkSeller($seller , $product)
     {
