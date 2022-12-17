@@ -10,6 +10,6 @@ class SellerScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->has('products');
+        $builder->has('products'); //seller has products .. the product he has put up on sale and buyer buys it form seller by fulfilliung Transaction
     }
 }

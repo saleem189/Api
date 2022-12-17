@@ -162,7 +162,7 @@ class UserController extends Controller
          * Essentially, retry is a general-purpose helper function that helps you attempt the given callback until the given maximum attempt threshold is met.
          * Here’s the signature of this function.
          * function retry($times, callable $callback, $sleep = 0, $when = null);
-         * 
+         * this is used when incase mailing service is down for any resao for some time
          */
         retry(5, function($user){
             Mail::to($user->email)->send(new UserMailChange($user));

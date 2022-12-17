@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Spatie\Fractalistic\Fractal;
 
 trait ApiResponser
 {
@@ -29,7 +30,13 @@ trait ApiResponser
      * @return collectionAll example User::all()->get() into collections and return in response
      */
     private function showAll(Collection $collection, $code = 200){
-        return $this->successResponse(['data' => $collection, 'code' => $code], $code);
+        if ($collection->isEmpty()) {
+            return $this->successResponse(['data' => $collection], $code); 
+        }
+
+        $transformer = $collection->first()->transformer;
+        $collection =  $this->transformData($collection, $transformer);
+        return $this->successResponse($collection, $code);
     }
 
     /**
@@ -37,15 +44,26 @@ trait ApiResponser
      * @return singleRecord  example  User::find()->first()
      */
     private function showOne(Model $model, $code = 200){
-        return $this->successResponse(['data' => $model, 'code' => $code], $code);
+        $transformer = $model->transformer; //every modal has public property of transformer defined in
+        $model = $this->transformData($model, $transformer);
+        return $this->successResponse($model, $code);
     }
 
        /**
-     * return single record of model in response
-     * @return singleRecord  example  User::find()->first()
+     * return message for user 
+     * @return messageResponse we used it in mails and other simple messages returning
      */
     private function showMessage($message, $code = 200){
         return $this->successResponse(['data' => $message, 'code' => $code], $code);
+    }
+
+    /**
+     * @param $data @param $transformer
+     * getting data and transformering its data into array
+     */
+    protected function transformData($data, $transformer){
+        $transaformation = fractal($data, new $transformer);
+        return $transaformation->toArray();
     }
 
 }

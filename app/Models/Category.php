@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Transformers\CategoryTransformerClass;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,6 +32,13 @@ class Category extends Model
         // 'remember_token',
             'pivot'
     ];
+
+    /**
+     * defining/linking Transforers in model 
+     */
+
+    public $transformer = CategoryTransformerClass::class;
+
 
     /**
      * The attributes that should be cast.

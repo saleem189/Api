@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\BuyerScope;
+use App\Transformers\BuyerTransformerClass;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,13 @@ class Buyer extends User
      * @var string
      */
     protected $table = 'users';
+
+    /**
+     * defining/linking Transforers in model 
+     */
+
+    public $transformer = BuyerTransformerClass::class;
+
 
     protected static function boot()
     {

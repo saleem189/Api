@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // builtin event of models
         User::created(function($user){
             retry(5, function() use ($user){
                 Mail::to($user->email)->send(new UserCreated($user));

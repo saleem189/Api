@@ -30,7 +30,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
-            'signature:X-Application-Name',
+            'signature:X-Application-Name', //changing by default header name from here which is used in signature middleware
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -41,9 +41,9 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'signature:X-Application-Name',
+            'signature:X-Application-Name', //changing by default header name from here which is used in signature middleware
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            'throttle:api', //can change it to throttle:4 (limit_number)
+            'throttle:10', //can change it to throttle:4 (limit_number)
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
