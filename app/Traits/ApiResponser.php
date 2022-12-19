@@ -35,6 +35,7 @@ trait ApiResponser
         }
 
         $transformer = $collection->first()->transformer;
+        $collection = $this->sortData($collection, $transformer);
         $collection =  $this->transformData($collection, $transformer);
         return $this->successResponse($collection, $code);
     }
@@ -49,13 +50,26 @@ trait ApiResponser
         return $this->successResponse($model, $code);
     }
 
-       /**
+    /**
      * return message for user 
      * @return messageResponse we used it in mails and other simple messages returning
      */
     private function showMessage($message, $code = 200){
         return $this->successResponse(['data' => $message, 'code' => $code], $code);
     }
+
+    /**
+     * sorting user by name or any other dynamic attribute passed in url with parameter sort_by  eg url?sort_by=name
+     * if no attribute is pass 
+     */
+    public function sortData(Collection $collection ,$transformer){
+        if(request()->has('sort_by')){
+            $attribute = $transformer::orignalAttributes(request()->sort_by);
+            $collection = $collection->sortBy->{$attribute};  //here we are using Higher Order Messages 
+        }
+        return $collection;
+    }
+
 
     /**
      * @param $data @param $transformer

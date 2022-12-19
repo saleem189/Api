@@ -45,4 +45,23 @@ class UserTransformerClass extends TransformerAbstract
 
         ];
     }
+
+    /**
+     * seeting keys for transfomer attributes againts orignal attributes for Sorting/Filters 
+     */
+    public static function orignalAttributes($index){
+        $attributes= [
+            'identifier' => 'id',
+            'name' =>'name',
+            'email' => 'email',
+            'isVerified' => 'verified',
+            'isAdmin' => 'admin',
+            'creationDate' => 'created_at',
+            'lastChange' => 'updated_at',
+            'deletedAt' => 'deleted_at',
+
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

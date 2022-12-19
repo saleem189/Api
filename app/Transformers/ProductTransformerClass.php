@@ -45,4 +45,25 @@ class ProductTransformerClass extends TransformerAbstract
             'deletedAt' => isset($product->deleted_at) ? (string) $product->deleted_at : null,
         ];
     }
+
+    /**
+     * seeting keys for transfomer attributes againts orignal attributes for Sorting/Filters 
+     */
+    public static function orignalAttributes($index){
+        $attributes= [
+            'identifier' => 'id',
+            'title' => 'name',
+            'details' => 'description',
+            'stock' => 'quantity',
+            'situation' => 'status',
+            'picture' =>'image',
+            'seller' => 'seller_id',
+            'creationDate' => 'created_at',
+            'lastChange' => 'updated_at',
+            'deletedAt' => 'deleted_at',
+
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }
