@@ -3,7 +3,9 @@
 namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Fractalistic\Fractal;
 
 trait ApiResponser
@@ -38,6 +40,7 @@ trait ApiResponser
 
         $collection = $this->filterData($collection, $transformer);
         $collection = $this->sortData($collection, $transformer);
+        $collection = $this->paginator($collection);
         $collection =  $this->transformData($collection, $transformer);
         return $this->successResponse($collection, $code);
     }
@@ -63,6 +66,7 @@ trait ApiResponser
     /**
      * sorting user by name or any other dynamic attribute passed in url with parameter sort_by  eg url?sort_by=name
      * if no attribute is pass 
+     * @return collection
      */
     public function sortData(Collection $collection ,$transformer){
         if(request()->has('sort_by')){
@@ -83,7 +87,9 @@ trait ApiResponser
     }
 
     /**
-     * 
+     * filteriing data by the attributes values and names
+     * @param query
+     * @return filteredData 
      */
     protected function filterData(Collection $collection, $transformer){
         foreach(request()->query() as $query => $value){
@@ -94,6 +100,38 @@ trait ApiResponser
             }
         }
         return $collection; 
+    }
+
+    /**
+     * Using custom Paginator
+     * @return paginator
+     */
+    protected function paginator(Collection $collection){
+
+        // validating rules for custom pages
+        $rules = [
+            'per_page' => 'integer|min:2|max:50',
+        ];
+        // using validator facade for independent working of validating rules and validation
+        Validator::validate(request()->all(), $rules);
+
+        $page = LengthAwarePaginator::resolveCurrentPage(); //getting current page
+        $perPage = 15;   //elements in per page
+
+        if (request()->has('per_page')) {
+            $perPage = (int) request()->per_page;   // implecetly defining interger value
+        }
+
+        $result = $collection->slice(($page-1)*$perPage,$perPage)->values();              //slice method will receive form which elemnt we are going to slice and quantity of elements of the page
+        $paginator = new LengthAwarePaginator($result, $collection->count(), $perPage, $page, [
+            'path' => LengthAwarePaginator::resolveCurrentPage(), //getting current page
+        ]);  //making paginator instance that receives the results,  real size of sollections, quantity of elements per page, current page and options in array
+
+        //to include other requests parameters we will append paginator to include them eg sorting request query and other filters
+        // $paginator->withPath(url()->current())->appends(request()->all()); //custom defining and appending paths and url
+
+        $paginator->withQueryString()->withPath(url()->current());  //laravel function to include querystring by default in link
+        return $paginator;
     }
 
 }
