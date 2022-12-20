@@ -47,7 +47,7 @@ class UserTransformerClass extends TransformerAbstract
     }
 
     /**
-     * seeting keys for transfomer attributes againts orignal attributes for Sorting/Filters 
+     * setting keys for transfomer attributes againts orignal attributes for Sorting/Filters 
      */
     public static function orignalAttributes($index){
         $attributes= [

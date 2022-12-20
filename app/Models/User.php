@@ -22,7 +22,7 @@ class User extends Authenticatable
     const REGULAR_USER = 'false';
 
     /**
-     * defining/linking Transforers in model 
+     * defining/linking Transformers in model 
      */
 
     public $transformer = UserTransformerClass::class;
