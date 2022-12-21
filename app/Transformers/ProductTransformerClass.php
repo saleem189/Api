@@ -43,6 +43,29 @@ class ProductTransformerClass extends TransformerAbstract
             'creationDate' => (string) $product->created_at,
             'lastChange' => (string) $product->updated_at,
             'deletedAt' => isset($product->deleted_at) ? (string) $product->deleted_at : null,
+            'links' =>[  //by defination HATEOAS is to included in element called links
+                [
+                    'relation'=>'self',
+                    'href'=>route('product.show', $product->id),
+                ],
+                [
+                    'relation'=>'product.buyers',
+                    'href'=>route('product.buyers.index', $product->id),
+                ],
+                [
+                    'relation'=>'product.categories',
+                    'href'=>route('product.categories.index', $product->id),
+                ],
+                [
+                    'relation'=>'seller', //it showes only information of seller not product
+                    'href'=>route('seller.show', $product->seller_id),
+                ],
+                [
+                    'relation'=>'product.transactions',
+                    'href'=>route('product.transactions.index', $product->id),
+                ],
+
+            ]
         ];
     }
 

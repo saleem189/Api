@@ -5,6 +5,7 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Fractalistic\Fractal;
 
@@ -78,7 +79,8 @@ trait ApiResponser
 
 
     /**
-     * @param $data @param $transformer
+     * @param data 
+     * @param transformer
      * getting data and transformering its data into array
      */
     protected function transformData($data, $transformer){
@@ -88,7 +90,7 @@ trait ApiResponser
 
     /**
      * filteriing data by the attributes values and names
-     * @param query
+     * @param query,Collections,Transformer
      * @return filteredData 
      */
     protected function filterData(Collection $collection, $transformer){
@@ -104,6 +106,7 @@ trait ApiResponser
 
     /**
      * Using custom Paginator
+     * @param Collection
      * @return paginator
      */
     protected function paginator(Collection $collection){

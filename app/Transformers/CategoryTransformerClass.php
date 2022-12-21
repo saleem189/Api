@@ -39,6 +39,29 @@ class CategoryTransformerClass extends TransformerAbstract
             'creationDate' => (string) $category->created_at,
             'lastChange' => (string) $category->updated_at,
             'deletedAt' => isset($category->deleted_at) ? (string) $category->deleted_at : null,
+            'links' =>[  //by defination HATEOAS is to included in element called links
+                [
+                    'relation'=>'self',
+                    'href'=>route('category.show', $category->id),
+                ],
+                [
+                    'relation'=>'category.buyers',
+                    'href'=>route('category.buyer.index', $category->id),
+                ],
+                [
+                    'relation'=>'category.products',
+                    'href'=>route('category.products.index', $category->id),
+                ],
+                [
+                    'relation'=>'category.sellers',
+                    'href'=>route('category.sellers.index', $category->id),
+                ],
+                [
+                    'relation'=>'category.transactions',
+                    'href'=>route('category.transactions.index', $category->id),
+                ],
+
+            ]
         ];
     }
 
