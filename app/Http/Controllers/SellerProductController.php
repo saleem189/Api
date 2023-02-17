@@ -6,13 +6,25 @@ use App\Models\Product;
 use App\Models\Seller;
 use App\Models\User;
 use App\Traits\ApiResponser;
+use App\Transformers\ProductTransformerClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class SellerProductController extends Controller
+class SellerProductController extends ApiController
 {
     use ApiResponser;
+
+    /**
+     * Calling Constructor and parent constructor
+     * and assiging middleware to specific function
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->middleware('transform.input:' . ProductTransformerClass::class)->only(['store', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      *
