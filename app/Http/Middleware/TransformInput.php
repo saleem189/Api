@@ -17,9 +17,10 @@ class TransformInput
     public function handle(Request $request, Closure $next, $transformer)
     {
         $transformedInput = [];
-        foreach ($request->request->all() as $key => $value) { // $request->request->all()   here it is trying to get all elements of the body of request
-            # code...
+        foreach ($request->request->all() as $input => $value) { // $request->request->all()   here it is trying to get all elements of the body of request
+            $transformedInput[$transformer::orignalAttribute($input)] = $value;
         }
+        $request->replace($transformedInput);
         return $next($request);
     }
 }
