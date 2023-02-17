@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Transformers\ProductTransformerClass;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -28,6 +29,13 @@ class Product extends Model
 
         
     ];
+
+    /**
+     * defining/linking Transforers in model 
+     */
+
+    public $transformer = ProductTransformerClass::class;
+
 
     protected $dates = ['deleted_at'];
 

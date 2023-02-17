@@ -18,7 +18,7 @@ class BuyerCategoryController extends Controller
     {
         $categories = $buyer->transactions()->with('products.categories')->get()
                     ->pluck('product.categories')
-                    ->collapse()
+                    ->collapse()   //convert multi-dimmension array into single dimmension array
                     ->unique('id')
                     ->values(); //this is nested eadger loding .. which means give every product with its categoyy object
         return $this->showAll($categories);

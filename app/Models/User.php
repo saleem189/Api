@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Transformers\UserTransformerClass;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,10 +15,19 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
 
+    
     const VERIFIED_USER = '1';
     const UNVERIFIED_USER = '0';
     const ADMIN_USER = 'true';
     const REGULAR_USER = 'false';
+
+    /**
+     * defining/linking Transformers in model 
+     */
+
+    public $transformer = UserTransformerClass::class;
+
+    
     /**
      * The attributes that are mass assignable.
      *

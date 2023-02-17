@@ -5,14 +5,27 @@ namespace App\Http\Controllers;
 use App\Mail\UserMailChange;
 use App\Models\User;
 use App\Traits\ApiResponser;
+use App\Transformers\UserTransformerClass;
+// use App\Transformers\UserTransformerClass;
 use Cloudinary\Api\Provisioning\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use phpDocumentor\Reflection\Types\Null_;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     use ApiResponser;
+
+    /**
+     * Calling Constructor and parent constructor
+     * and assiging middleware to specific function
+     */
+    public function __construct()
+    {
+        parent::__construct(); //calling ApiController constructor
+        $this->middleware('transform.input:' . UserTransformerClass::class)->only(['store', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -162,7 +175,7 @@ class UserController extends Controller
          * Essentially, retry is a general-purpose helper function that helps you attempt the given callback until the given maximum attempt threshold is met.
          * Here’s the signature of this function.
          * function retry($times, callable $callback, $sleep = 0, $when = null);
-         * 
+         * this is used when incase mailing service is down for any reson for some time
          */
         retry(5, function($user){
             Mail::to($user->email)->send(new UserMailChange($user));
