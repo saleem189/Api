@@ -79,4 +79,24 @@ class TransactionTransformerClass extends TransformerAbstract
 
         return isset($attributes[$index]) ? $attributes[$index] : null;
     }
+
+    /**
+     * setting keys for transfomer attributes againts orignal attributes for Posts request in middleware 
+     */
+    public static function transformedAttributes($index){
+        $attributes= [
+            'id' =>'identifier',
+            'quantity' => 'quantity' ,
+            'buyer_id' => 'buyer' ,
+            'product_id' =>'product'  ,
+            'created_at' =>'creationDate'  ,
+            'updated_at' =>'lastChange',
+            'deleted_at' =>'deletedAt',
+
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }
+
+

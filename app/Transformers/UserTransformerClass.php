@@ -64,4 +64,23 @@ class UserTransformerClass extends TransformerAbstract
 
         return isset($attributes[$index]) ? $attributes[$index] : null;
     }
+
+    /**
+     * setting keys for transfomer attributes againts orignal attributes for Posts request in middleware 
+     */
+    public static function transformedAttributes($index){
+        $attributes= [
+            'id' => 'identifier',
+            'name' => 'name',
+            'email' => 'email',
+            'verified' => 'isVerified',
+            'admin' => 'isAdmin' ,
+            'created_at' => 'creationDate',
+            'updated_at' => 'lastChange',
+            'deleted_at'=> 'deletedAt',
+
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }
